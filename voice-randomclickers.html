@@ -1,0 +1,985 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- فقط یک بار preconnect برای youtube و google -->
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://www.google.com">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>www.randomclickers.com/Music-clickers</title>
+
+    <!-- لود اسکریپت‌ها با async یا defer -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://www.youtube.com/iframe_api" async defer></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ve7xie2zxf");
+</script>
+    <!-- Custom Styles -->
+    <link href="static/css/style.css" rel="stylesheet">
+	
+</head>
+
+<body>
+<style>
+
+/* === General Body Styling === */
+body {
+    background-color:white;
+    color: #e0e0e0;
+    font-family: 'Quicksand', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden; /* جلوگیری از اسکرول اضافی و کرش موبایل */
+}
+
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #333;
+    padding: 15px 0;
+}
+.navbar-brand {
+    color: #e0e0e0 !important;
+    font-size: 1.2rem;
+}
+.navbar-nav .nav-link {
+    color: #e0e0e0;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.navbar-nav .nav-link:hover {
+    color: #ff7b00;
+    transition: color 0.3s ease;
+}
+
+/* Main Content Section */
+.container {
+    max-width: 1960px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+/* YouTube iframe */
+iframe {
+    border: none;
+    background: #181818;
+    margin-top: 20px;
+    width: 100%;
+    height: 350px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Styles */
+.modal-content {
+    background-color: #333;
+    color: #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.modal-header {
+    background-color: #333;
+    color: #e0e0e0;
+}
+.modal-body {
+    font-size: 1.1rem;
+}
+.modal-footer {
+    border-top: 1px solid #444;
+}
+.modal-footer .btn-secondary {
+    background-color: #333;
+    color: #e0e0e0;
+}
+.modal-footer .btn-secondary:hover {
+    background-color: #555;
+}
+
+/* Footer Styling */
+.footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+}
+.footer a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.footer a:hover {
+    color: #ff7b00;
+}
+
+/* Utility Classes */
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.text-white {
+    color: white !important;
+}
+.bg-primary {
+    background-color: #007bff !important;
+}
+.bg-danger {
+    background-color: #ff1e1e !important;
+}
+.text-center {
+    text-align: center;
+}
+
+/* Profile Picture */
+#profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+    display: none;
+}
+#status {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+img {
+    border-radius: 50%;
+}
+
+/* Simple Button */
+.simple-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 0px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.simple-button:hover {
+    background-color: #0056b3;
+}
+.simple-button:active {
+    background-color: #004494;
+}
+
+/* About Modal Styling */
+#aboutModal .modal-content {
+    background-color: #333;
+    color: #e0e0e0;
+}
+#aboutModal .modal-header {
+    background-color: #444;
+    color: #e0e0e0;
+}
+#aboutModal .modal-body {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+/* Comment Box */
+.comment-container {
+    display: none;
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    background-color: #1e1e1e;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+.mini-comment-input {
+    width: 100%;
+    padding: 8px;
+    background-color: #2b2b2b;
+    border: 1px solid #555;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 14px;
+}
+.mini-submit-btn {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    background-color: #bb86fc;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+.mini-submit-btn:hover {
+    background-color: #7f39fb;
+}
+.mini-comment-list {
+    margin-top: 10px;
+    font-size: 13px;
+    max-height: 100px;
+    overflow-y: auto;
+    background-color: #2b2b2b;
+    padding: 5px;
+    border-radius: 3px;
+}
+.mini-comment-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #e0e0e0;
+}
+
+/* Cover Full Page */
+#clickBlocker {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 99999;
+    background: transparent;
+    display: none;
+}
+
+/* Smart Mode Label */
+#smartModeLabel {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color:white;
+    background-color:#333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Refresh Button Text Animation */
+#refreshButtonText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    animation: slideText 6s infinite; /* زمان طولانی‌تر برای کاهش فشار */
+}
+@keyframes slideText {
+    0% { top: 0; }
+    40% { top: -100%; }
+    60% { top: -100%; }
+    100% { top: 0; }
+}
+#refreshButtonText span {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+/* Magic Random Button */
+.btn-magic-random {
+    position: relative;
+    overflow: hidden;
+    width: 500px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Playlist Items */
+.rec-item {
+    display: inline-block;
+    width: 120px;
+    margin-right: 10px;
+    cursor: pointer;
+    background: #222;
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    color: white;
+    transition: 0.2s;
+    flex-shrink: 0; /* جلوگیری از کرش موبایل */
+}
+.rec-item:hover {
+    transform: scale(1.05);
+    background: #333;
+}
+.rec-thumb {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.btn {
+    width: 500px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+.liked {
+    background-color: #181818; 
+    opacity: 0.5;
+}
+.like-icon {
+    margin-right: 10px;
+    font-size: 20px;
+    font-family: 'Font Awesome 5 Free';
+}
+
+/* Recommended Container */
+#recommendedContainer {
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+    width: 100%;
+    animation: scroll 80s linear infinite; /* طولانی‌تر برای کاهش مصرف رم */
+}
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-1%); }
+}
+
+/* === Segmented Spinner (Like Image) === */
+
+.btn {
+    position: relative;
+}
+
+/* مخفی پیش‌فرض */
+.btn .cf-spinner {
+    display: none;
+    position: absolute;
+    width: 28px;
+    height: 28px;
+}
+
+/* وقتی loading فعال شود */
+.btn.loading .cf-spinner {
+    display: block;
+}
+
+/* مخفی کردن متن هنگام لود */
+.btn.loading span {
+    visibility: hidden;
+}
+
+/* ساخت 12 خط */
+.cf-spinner div {
+    transform-origin: 14px 14px;
+    animation: cfFade 1.2s linear infinite;
+}
+
+.cf-spinner div:after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 13px;
+    width: 3px;
+    height: 8px;
+    border-radius: 2px;
+    background: #ff7b00; /* نارنجی */
+}
+
+/* چرخش هر قطعه */
+.cf-spinner div:nth-child(1) { transform: rotate(0deg); animation-delay: -1.1s; }
+.cf-spinner div:nth-child(2) { transform: rotate(30deg); animation-delay: -1s; }
+.cf-spinner div:nth-child(3) { transform: rotate(60deg); animation-delay: -0.9s; }
+.cf-spinner div:nth-child(4) { transform: rotate(90deg); animation-delay: -0.8s; }
+.cf-spinner div:nth-child(5) { transform: rotate(120deg); animation-delay: -0.7s; }
+.cf-spinner div:nth-child(6) { transform: rotate(150deg); animation-delay: -0.6s; }
+.cf-spinner div:nth-child(7) { transform: rotate(180deg); animation-delay: -0.5s; }
+.cf-spinner div:nth-child(8) { transform: rotate(210deg); animation-delay: -0.4s; }
+.cf-spinner div:nth-child(9) { transform: rotate(240deg); animation-delay: -0.3s; }
+.cf-spinner div:nth-child(10){ transform: rotate(270deg); animation-delay: -0.2s; }
+.cf-spinner div:nth-child(11){ transform: rotate(300deg); animation-delay: -0.1s; }
+.cf-spinner div:nth-child(12){ transform: rotate(330deg); animation-delay: 0s; }
+
+@keyframes cfFade {
+    0% { opacity: 1; }
+    100% { opacity: 0.15; }
+}
+</style>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="#"><i class="fab fa-youtube"></i>  Music-Clickers</a>
+            
+            <img id="profile-pic" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#about" data-bs-toggle="modal" data-bs-target="#aboutModal"><i
+                                class="fas fa-info-circle"></i> About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white"
+                            href="https://chromewebstore.google.com/detail/croxyproxy-free-web-proxy/lmmpgfjnchldhcieiiegcpdmaidkaanb?hl=en"
+                            target="_blank"><i class="fab fa-windows"></i> Proxy</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="Object-Price-Calculator.html" target="_blank"><i class="fab fa-dollar"></i> Object Price Calculator</a>
+                    </li>
+					
+					<li class="nav-item">
+                        <a class="nav-link text-white" href="https://www.youtube.com/?embeds_referring_euri=http%3A%2F%2Fwww.randomclickers.com%2F&embeds_referring_origin=https%3A%2F%2Frandomclickers.com&source_ve_path=MTc4MDUz" target="_blank"><i class="fab fa-google"></i> Sign in with google</a>
+                    </li>
+					    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+	<!-- Main Content -->
+
+<!-- Main Player iframe -->
+<iframe id="player" width="500" height="350"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+</iframe>
+
+<!-- Buttons -->
+<div class="container text-center my-5">
+    <div class="row justify-content-center align-items-center">
+        <div style="align-items: center; gap: 10px;">
+
+            <div class="button-container">
+                <!-- Like Button -->
+                <button id="likeButton" class="btn">
+                    <span id="likeIcon" class="like-icon">&#xf164;</span> 
+                    <span id="likeButtonText">Like</span>
+					<div class="cf-spinner">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+    </div>
+                </button>
+
+                <!-- Refresh Button -->
+                <button id="refreshButton" class="btn-magic-random">
+                     <span id="likeButtonText">Next</span>
+					 
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<h3 style="color:black; text-align:center; margin-top:20px;">Recommended Playlists</h3>
+
+<!-- Recommended Playlists Scroll -->
+<div id="recommendedContainer"
+     style="white-space: nowrap; overflow-x: auto; padding:10px; background:#111; border-radius:10px;">
+</div>
+
+<br /><br />
+
+<div id="clickBlocker"></div>
+				<br />
+<label id="smartModeLabel">
+  <input type="checkbox" id="smartModeToggle">
+  Enable Smart Box Mode</input>
+</label>
+			
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="aboutModalLabel">About Shuffle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Shuffle is a free web app that plays random YouTube Music on every refresh. Enjoy discovering new Music! Like a video to watch it more times . Its free and will be free for ever.</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+	/* ============================
+   Safe Random Player Script
+   ============================ */
+
+var app = {
+  playlist: { id: 'PLt1KecuO3RM3HjHWHVRxCjdqQDP9I7L2i' },
+  index: 0,
+  likes: {},
+  videoList: [],
+  queryStrings: '?enablejsapi=1&wmode=transparent&autoplay=0&rel=0&showinfo=0&iv_load_policy=3&showsearch=0&autohide=1&controls=1'
+};
+
+function safeGet(id) { return document.getElementById(id); }
+
+/* ========================
+   LocalStorage Functions
+   ======================== */
+
+function saveLikes() { try { localStorage.setItem('videoLikes', JSON.stringify(app.likes)); } catch(e){} }
+function loadLikes() { try { var s=localStorage.getItem('videoLikes'); if(s) app.likes=JSON.parse(s)||{}; } catch(e){ app.likes={}; } }
+function saveVideoList() { try{ localStorage.setItem('videoList', JSON.stringify(app.videoList)); } catch(e){} }
+function loadVideoList() { try{ var s=localStorage.getItem('videoList'); if(s) app.videoList=JSON.parse(s)||[]; else app.videoList=[]; } catch(e){ app.videoList=[]; } }
+
+/* ========================
+   Video URL
+   ======================== */
+
+function setURL(){
+    var id = app.videoList[app.index];
+    if(!id) return '';
+    return "https://www.youtube.com/embed/" + id + app.queryStrings;
+}
+
+/* ========================
+   Random by weight
+   ======================== */
+
+function generateRandom(num){ return Math.floor(Math.random()*num); }
+
+function getNextIndex(){
+    if(!app.videoList.length) return 0;
+
+    var weights=[], total=0;
+
+    for(var i=0;i<app.videoList.length;i++){
+        var w = app.likes[i]?5:1;
+        weights.push(w);
+        total += w;
+    }
+
+    var r = generateRandom(total);
+
+    for(var j=0;j<weights.length;j++){
+        if(r<weights[j]) return j;
+        r -= weights[j];
+    }
+
+    return 0;
+}
+
+/* ========================
+   Fetch Playlist Videos (PHP backend)
+   ======================== */
+
+async function fetchPlaylistVideos(plid){
+    try{
+        const res = await fetch("fetch.php?playlist=" + plid);
+        const data = await res.json();
+
+        if(Array.isArray(data)){
+            app.videoList = data;
+            saveVideoList();
+        }
+    }catch(err){
+        console.error("Playlist fetch failed:", err);
+    }
+}
+
+/* ========================
+   Update UI
+   ======================== */
+
+function updateLikeButtonUI(){
+    var likeBtn = safeGet('likeButton'),
+        likeText = safeGet('likeButtonText'),
+        likeIcon = safeGet('likeIcon');
+
+    if(!likeBtn) return;
+
+    if(app.likes[app.index]){
+        likeBtn.classList.add('liked');
+        if(likeText) likeText.textContent='Liked';
+        if(likeIcon){ likeIcon.innerHTML='&#xf164;'; likeIcon.style.color='green'; }
+    }else{
+        likeBtn.classList.remove('liked');
+        if(likeText) likeText.textContent='Like';
+        if(likeIcon){ likeIcon.innerHTML='&#xf087;'; likeIcon.style.color=''; }
+    }
+}
+
+/* ========================
+   Document Ready
+   ======================== */
+
+document.addEventListener('DOMContentLoaded', async function(){
+
+    loadLikes();
+    loadVideoList();
+
+    var player = safeGet('player');
+
+    if(app.videoList.length===0){
+        await fetchPlaylistVideos(app.playlist.id);
+    }
+
+    app.index = getNextIndex();
+
+    if(player) player.src = setURL();
+
+    updateLikeButtonUI();
+
+    /* Recommended playlists */
+    var recommendedPlaylists = [
+	{ id:"PLt1KecuO3RM3HjHWHVRxCjdqQDP9I7L2i", title:"Default Playlist" },
+    { id:"PLt1KecuO3RM0ONHI6DDFiixvN-ZBrm8AP", title:"Playlist 1" },
+    { id:"PL_QVa43XFPh2ZsFeeqPm2suYQPfGAjhRF", title:"Playlist 2" },
+    { id:"PLgzTt0k8mXzEk586ze4BjvDXR7c-TUSnx", title:"Playlist 3" },
+    { id:"PLI_7Mg2Z_-4Lfo7Eo2jxrFAWR5KbBBjWP", title:"Playlist 4" },
+    { id:"PL4_6pva_T8ptMSVkBppV5KDPZJw1xaJEj", title:"Playlist 5" },
+    { id:"PLrcF4sMJ9163awliLeWPfb4js1Qba1Iwf", title:"Playlist 6" },
+    { id:"PLs5CUzq1Wjh4woe-1RXGBqeLzBmOidUTh", title:"Playlist 7" },
+    { id:"PLfEYZTAqw718tL9bdcwpuE7ivw7B7FMCO", title:"Playlist 8" }
+  ];
+
+    var thumb = 'https://randomclickers.com/music/static/images/playlist.png';
+    var container = safeGet('recommendedContainer');
+
+    if(container && !container.dataset.built){
+        container.dataset.built='1';
+        var fragment = document.createDocumentFragment();
+
+        recommendedPlaylists.forEach(function(pl){
+            var d=document.createElement('div');
+            d.className='rec-item';
+            d.dataset.plid = pl.id;
+            d.innerHTML='<img class="rec-thumb" src="'+thumb+'"><div class="rec-title">'+pl.title+'</div>';
+            fragment.appendChild(d);
+        });
+
+        container.appendChild(fragment);
+        container.appendChild(container.cloneNode(true));
+    }
+
+    /* Click on Recommended Playlist */
+    if(container){
+        container.addEventListener('click', async function(e){
+            var node = e.target;
+            while(node && !node.classList.contains('rec-item')) node=node.parentElement;
+            if(!node) return;
+            var plid=node.dataset.plid;
+            if(!plid) return;
+
+            app.playlist.id=plid;
+            app.videoList=[];
+            saveVideoList();
+
+            await fetchPlaylistVideos(plid);
+
+            app.index = getNextIndex();
+            if(player) player.src=setURL();
+            updateLikeButtonUI();
+        }, {passive:true});
+    }
+
+    /* Like Button */
+var likeBtn = safeGet('likeButton');
+if(likeBtn){
+    likeBtn.addEventListener('click', function(){
+        likeBtn.classList.add('loading'); // شروع لودینگ
+        setTimeout(function(){
+            if(app.likes[app.index]) delete app.likes[app.index];
+            else app.likes[app.index] = 1;
+
+            saveLikes();
+            updateLikeButtonUI();
+            likeBtn.classList.remove('loading'); // پایان لودینگ
+        }, 500); // شبیه‌سازی عملیات
+    }, {passive:true});
+}
+
+/* Refresh Button */
+var refreshBtn = safeGet('refreshButton');
+if(refreshBtn){
+    refreshBtn.addEventListener('click', function(){
+        refreshBtn.classList.add('loading'); // شروع لودینگ
+        setTimeout(function(){
+            app.index = getNextIndex();
+            if(player) player.src = setURL();
+            updateLikeButtonUI();
+            refreshBtn.classList.remove('loading'); // پایان لودینگ
+        }, 700); // شبیه‌سازی عملیات
+    }, {passive:true});
+}
+
+   /* Refresh Button */
+var refreshBtn = safeGet('refreshButton');
+if(refreshBtn){
+    refreshBtn.addEventListener('click', function(){
+
+        refreshBtn.classList.add('loading'); // شروع لودینگ
+
+        setTimeout(function(){
+
+            app.index = getNextIndex();
+            if(player) player.src = setURL();
+            updateLikeButtonUI();
+
+            refreshBtn.classList.remove('loading'); // پایان لودینگ
+
+        }, 700); // کمی بیشتر برای حس بهتر
+    }, {passive:true});
+}
+
+    /* Smart Mode */
+    var smartToggle = safeGet('smartModeToggle'), smartActive=false;
+
+    function smartMouseDown(e){
+        if(!smartToggle||!smartToggle.checked) return;
+        if(player && player.contains(e.target)) return;
+        if(e.button===0){ e.preventDefault(); app.index=getNextIndex(); if(player) player.src=setURL(); updateLikeButtonUI(); }
+        else if(e.button===2){ e.preventDefault(); if(likeBtn) likeBtn.click(); }
+    }
+
+    function smartContext(e){ if(!smartToggle||!smartToggle.checked) return; e.preventDefault(); }
+
+    function enableSmart(){ if(smartActive) return; document.addEventListener('mousedown',smartMouseDown); document.addEventListener('contextmenu',smartContext); smartActive=true; document.body.classList.add('smart-mode'); }
+    function disableSmart(){ if(!smartActive) return; document.removeEventListener('mousedown',smartMouseDown); document.removeEventListener('contextmenu',smartContext); smartActive=false; document.body.classList.remove('smart-mode'); }
+
+    try{
+        var saved = localStorage.getItem('smartBoxMode');
+        if(saved===null){ localStorage.setItem('smartBoxMode','enabled'); saved='enabled'; }
+        if(smartToggle){ smartToggle.checked=(saved==='enabled'); if(smartToggle.checked) enableSmart(); else disableSmart();
+            smartToggle.addEventListener('change', function(){ localStorage.setItem('smartBoxMode', smartToggle.checked?'enabled':'disabled'); if(smartToggle.checked) enableSmart(); else disableSmart(); }, {passive:true});
+        }else disableSmart();
+    }catch(e){ disableSmart(); }
+
+    var preloader = safeGet('preloader'); if(preloader) setTimeout(()=>{preloader.style.display='none';},400);
+
+    updateLikeButtonUI();
+});
+
+/* ========================
+   Stable Voice Control (Only Key Commands)
+   ======================== */
+
+var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'fa-IR';
+    recognition.continuous = true;
+    recognition.interimResults = false;
+
+    let voiceEnabled = false;
+    let isTemporarilyPaused = false;
+    let restartTimeout = null;
+
+    /* ========================
+       توقف موقت امن میکروفون
+    ======================== */
+    function pauseMicTemporarily(seconds = 3){
+        if(!voiceEnabled) return;
+
+        isTemporarilyPaused = true;
+
+        try { recognition.stop(); } catch(e){}
+
+        clearTimeout(restartTimeout);
+        restartTimeout = setTimeout(function(){
+            if(voiceEnabled){
+                try {
+                    recognition.start();
+                    isTemporarilyPaused = false;
+                } catch(e){}
+            }
+        }, seconds * 1000);
+    }
+
+    /* ========================
+       پخش آهنگ با ایندکس
+    ======================== */
+    function playByIndex(index){
+        if(index >= 0 && index < app.videoList.length){
+
+            pauseMicTemporarily(3);
+
+            app.index = index;
+
+            const player = safeGet('player');
+            if(player){
+                player.src = setURL().replace("autoplay=0","autoplay=1");
+            }
+
+            updateLikeButtonUI();
+        }
+    }
+
+    /* ========================
+       دریافت فرمان صوتی (فقط کلیدها)
+    ======================== */
+    recognition.onresult = function(event){
+
+        if(!voiceEnabled || isTemporarilyPaused) return;
+
+        const transcript = event.results[event.results.length - 1][0]
+            .transcript.trim().toLowerCase();
+
+        console.log("Voice:", transcript);
+
+        // فقط کلمات کلیدی را پردازش می‌کنیم
+        if(transcript.includes("لایک")){
+            pauseMicTemporarily(2);
+            const likeBtn = safeGet('likeButton');
+            if(likeBtn && !app.likes[app.index]) likeBtn.click();
+            return;
+        }
+
+        if(transcript.includes("آنلایک")){
+            pauseMicTemporarily(2);
+            const likeBtn = safeGet('likeButton');
+            if(likeBtn && app.likes[app.index]) likeBtn.click();
+            return;
+        }
+
+        if(transcript.includes("نکست") || transcript.includes("بعدی")){
+            pauseMicTemporarily(3);
+            app.index = getNextIndex();
+            const player = safeGet('player');
+            if(player) player.src = setURL().replace("autoplay=0","autoplay=1");
+            updateLikeButtonUI();
+            return;
+        }
+
+        if(transcript.includes("پخش")){
+            pauseMicTemporarily(3);
+            const player = safeGet('player');
+            if(player) player.src = setURL().replace("autoplay=0","autoplay=1");
+            updateLikeButtonUI();
+            return;
+        }
+
+        // بقیه صداها نادیده گرفته می‌شوند
+    };
+
+    /* ========================
+       جلوگیری از لوپ ری‌استارت مزاحم
+    ======================== */
+    recognition.onend = function(){
+        if(voiceEnabled && !isTemporarilyPaused){
+            try { recognition.start(); } catch(e){}
+        }
+    };
+
+    recognition.onerror = function(e){
+        console.log("Voice error:", e);
+    };
+
+    /* ========================
+       ساخت دکمه میکروفون
+    ======================== */
+    const micBtn = document.createElement("button");
+    micBtn.innerHTML = "🎤";
+    micBtn.style.position = "fixed";
+    micBtn.style.bottom = "20px";
+    micBtn.style.right = "20px";
+    micBtn.style.fontSize = "22px";
+    micBtn.style.padding = "14px";
+    micBtn.style.borderRadius = "50%";
+    micBtn.style.border = "none";
+    micBtn.style.cursor = "pointer";
+    micBtn.style.zIndex = "9999";
+    micBtn.style.transition = "0.3s";
+
+    document.body.appendChild(micBtn);
+
+    micBtn.addEventListener("click", function(){
+
+        if(!voiceEnabled){
+            try{
+                recognition.start();
+                voiceEnabled = true;
+                micBtn.style.background = "red";
+                micBtn.style.color = "white";
+                console.log("Voice ON");
+            }catch(e){}
+        } else {
+            voiceEnabled = false;
+            isTemporarilyPaused = false;
+            clearTimeout(restartTimeout);
+            recognition.stop();
+            micBtn.style.background = "";
+            micBtn.style.color = "";
+            console.log("Voice OFF");
+        }
+
+    });
+
+}
+	</script>
+     
+		</body>
+
+</html>
